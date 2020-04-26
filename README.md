@@ -61,3 +61,51 @@ function Button() {
 	return <button onClick={() => console.log(Math.random())}>{counter}</button>;
 }
 ```
+
+#### Simple example using state and state manipulation
+```javascript
+function Button() {
+  const [counter, setCounter] = useState(0);
+  const handleClick = () => setCounter(counter+1);
+    return (
+    <button onClick={handleClick}>
+        {counter}
+    </button>
+    );
+}
+
+ReactDOM.render(
+  <Button />, 
+  document.getElementById('mountNode'),
+);
+```
+
+#### Passing data from parent to children uses one way flow data. Similar to single resposibility in Java
+```javascript
+function Button(props) {
+    return (
+    <button onClick={props.onClickFunc}>
+        +1
+    </button>
+    );
+}
+
+function Display(props) {
+  return (
+    <div>
+    {props.message}
+    </div>
+  );
+}
+
+
+function App(){
+  const [counter, setCounter] = useState(0);
+  const incrementCounter = () => setCounter(counter+1);
+  return(
+  <div>
+    <Button onClickFunc={incrementCounter}/>
+    <Display message={counter}/>
+  </div>
+  );
+}
