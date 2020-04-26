@@ -80,11 +80,11 @@ ReactDOM.render(
 );
 ```
 
-#### Passing data from parent to children uses one way flow data. Similar to single resposibility in Java
+#### Passing data from parent to children uses one way flow data **Responsibility Isolation**
 ```javascript
 function Button(props) {
     return (
-    <button onClick={props.onClickFunc}>
+    <button onClick={props.onClickFunction}>
         +1
     </button>
     );
@@ -93,19 +93,24 @@ function Button(props) {
 function Display(props) {
   return (
     <div>
-    {props.message}
+        {props.message}
     </div>
   );
 }
-
 
 function App(){
   const [counter, setCounter] = useState(0);
   const incrementCounter = () => setCounter(counter+1);
   return(
   <div>
-    <Button onClickFunc={incrementCounter}/>
+    <Button onClickFunction={incrementCounter}/>
     <Display message={counter}/>
   </div>
   );
 }
+
+ReactDOM.render(
+  <App />, 
+  document.getElementById('mountNode'),
+);
+```
