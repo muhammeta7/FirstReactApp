@@ -62,7 +62,7 @@ function Button() {
 }
 ```
 
-#### Simple example using state and state manipulation
+##### Simple example using state and state manipulation
 ```javascript
 function Button() {
   const [counter, setCounter] = useState(0);
@@ -80,7 +80,7 @@ ReactDOM.render(
 );
 ```
 
-#### Passing data from parent to children uses one way flow data **Responsibility Isolation**. Seperation of responsibilties. 
+##### Passing data from parent to children uses one way flow data **Responsibility Isolation**. Seperation of responsibilties. 
 
 ```javascript
 function Button(props) {
@@ -154,3 +154,43 @@ ReactDOM.render(
   document.getElementById('mountNode'),
 );
 ```
+
+##### Tree Reconsiliation
+Prevents imperative logic in the React way. Much more efficient and extracts complexity
+
+```javascript
+const render= () => {
+  document.getElementById('mountNode').innerHTML = `
+	<div>
+    Hello HTML
+    <input />
+    <pre>${(new Date).toLocaleTimeString()}</pre>
+  </div>
+`;
+
+  ReactDOM.render(
+    React.createElement(
+      'div', 
+      null, 
+      'Hello React',
+      React.createElement('input', null),
+      React.createElement('pre', null, (new Date).toLocaleTimeString()),
+    ),
+    document.getElementById('mountNode2'),
+  );
+}
+
+setInterval(render, 1000);
+```
+
+##### Takeaways from this section
+* Props and State
+    * (props) => {}
+    * [val, setVal] = useState(initialVal)
+    * Immutable props. Mutable state
+* ReactDOM.render has two major parts
+    * Component
+    * DOM node
+* React Events
+    * React events 
+    * onClick, onSubmit, ...
