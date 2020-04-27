@@ -194,3 +194,118 @@ setInterval(render, 1000);
 * React Events
     * React events 
     * onClick, onSubmit, ...
+
+## Modern Javascript Crash Course ES6
+
+##### Variable declarations
+* Using var in block scope still allows access to it throughout program
+* Use let in for loops to make it local variable
+* const is used when you do now want to change its value
+    * cant change references and are immutable
+    * array or objects work with const but you may still change values 
+
+##### Arrow functions vs Regular Functions
+* Regular Functions
+    * give access to their calling environment
+    * value of "this" keyword depends on how function was called (the Object that made the call)
+* Arrow Functions
+    * value of "this" keyword depends on where function was defined(Scope that defined function)
+    * good for functional programing, essentially a lamda
+
+##### Destructuring and Rest/Spread
+```javascript
+    // const PI = Math.Pi;
+    // const E = Math.E;
+    // const SQRT2 = Math.SQRT2;
+    const {PI, E, SQRT} = Math;
+
+    // React example
+    // const {Component, Fragment, useState} = require('react');
+    // useState();
+
+    const circle = {
+        label: 'circleX',
+        radius: 2
+    };
+
+    const circleArea = {{radius}, {precision = 2} = {} =>
+        (PI * radius * radius).toFixed(precision);
+
+    console.log(
+        circleArea(circle, {precisions: 5})
+    );
+```
+Array descructuring
+```javascript
+    const [first, ...restOfItems] = [10, 20, 30, 40];
+
+    console.log(first);
+    console.log(restOfItems);
+```
+
+##### Template Strings
+* Use single or double quotes
+* Use `` for templates
+    * use interpolation
+
+```javascript
+    const html = `
+        <div>
+            ${Math.random()}
+        </div>
+    `;
+```
+
+##### Classes
+```javascript
+class Person {
+  constructor(name) {
+    this.name = name;
+  }
+  greet() {
+    console.log(`Hello ${this.name}!`);
+  }
+}
+
+class Student extends Person {
+  constructor(name, level) {
+    super(name);
+    this.level = level;
+  }
+  greet() {
+    console.log(`Hello ${this.name} from ${this.level}`);
+  }
+}
+
+const o1 = new Person("Max");
+const o2 = new Student("Tina", "1st Grade");
+const o3 = new Student("Mary", "2nd Grade");
+o3.greet = () => console.log('I am special!');
+
+o1.greet();
+o2.greet();
+o3.greet();
+
+```
+##### Async/Await
+```javascript
+// const fetchData = () => {
+//   fetch('https://api.github.com').then(resp => {
+//     resp.json().then(data => {
+//       console.log(data);
+//     });
+//   });
+// };
+
+const fetchData = async () => {
+  const resp = await fetch('https://api.github.com');
+  const data = await resp.json();
+  console.log(data);
+};
+
+fetchData();
+
+```
+Instead of using .then simplify but using async() await.
+
+## Class Components
