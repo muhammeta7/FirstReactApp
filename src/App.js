@@ -1,7 +1,6 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-import UserCards from './components/UserCards';
+import React from "react";
+import "./App.css";
+import UserCards from "./components/CardUtils/UserCards";
 
 function App() {
   return (
@@ -22,7 +21,6 @@ function App() {
       </header> */}
       <UserCards title="Github Cards" />
     </div>
-  
   );
 }
 
