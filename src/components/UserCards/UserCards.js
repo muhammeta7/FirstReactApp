@@ -1,13 +1,11 @@
 import React from "react";
-
-import CardList from "./CardList";
-import Form from "./Form";
+import CardList from "../cardlist/CardList";
+import Form from "../form/Form";
 
 class UserCards extends React.Component {
   state = {
     profiles: [],
   };
-
   addNewProfile = (profileData) => {
     this.setState((prevState) => ({
       profiles: [...prevState.profiles, profileData],

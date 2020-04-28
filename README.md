@@ -1,32 +1,39 @@
 ## Pluralsight React Tutorial
 
 ### Why Use React
-* React is a library and not a framework
-* Working with a virtual browser
-* Plain old JS
-* Facebook tests it frequently before putting out feautures
-* Declarative for dynamic data
+
+- React is a library and not a framework
+- Working with a virtual browser
+- Plain old JS
+- Facebook tests it frequently before putting out feautures
+- Declarative for dynamic data
 
 ## Basic Concepts
+
 #### Components
-* Like functions
-* Input: props, state | Output UI
-* Reusable and compatable
-* Can Manage a private state
+
+- Like functions
+- Input: props, state | Output UI
+- Reusable and compatable
+- Can Manage a private state
 
 #### Updates
-* React will react
-* Updates browsers
+
+- React will react
+- Updates browsers
 
 #### Virtual views in memory
-* Generate HTML using JS
-* No HTML template language
+
+- Generate HTML using JS
+- No HTML template language
 
 #### React Components
-* Function Components
-* Class Components
+
+- Function Components
+- Class Components
 
 ## JSX is NOT the same as HTML
+
 Will not throw syntax error because return is not HTML, rather it is JSX.
 Using Babel will compile code into React API calls.
 
@@ -44,175 +51,155 @@ ReactDOM, render(
 ## Components must be UpperCase for first Letter(example: MyComponent)
 
 ```javascript
-function logRandom(){
+function logRandom() {
   console.log(Math.random());
 }
 
 function Button() {
   const [counter, setCounter] = useState(0);
-	return <button onClick={logRandom}>{counter}</button>;
+  return <button onClick={logRandom}>{counter}</button>;
 }
 ```
 
 You can also re-write above code as inline function using arrow functions
+
 ```javascript
 function Button() {
   const [counter, setCounter] = useState(0);
-	return <button onClick={() => console.log(Math.random())}>{counter}</button>;
+  return <button onClick={() => console.log(Math.random())}>{counter}</button>;
 }
 ```
 
 ##### Simple example using state and state manipulation
+
 ```javascript
 function Button() {
   const [counter, setCounter] = useState(0);
-  const handleClick = () => setCounter(counter+1);
-    return (
-    <button onClick={handleClick}>
-        {counter}
-    </button>
-    );
+  const handleClick = () => setCounter(counter + 1);
+  return <button onClick={handleClick}>{counter}</button>;
 }
 
-ReactDOM.render(
-  <Button />, 
-  document.getElementById('mountNode'),
-);
+ReactDOM.render(<Button />, document.getElementById("mountNode"));
 ```
 
-##### Passing data from parent to children uses one way flow data **Responsibility Isolation**. Seperation of responsibilties. 
+##### Passing data from parent to children uses one way flow data **Responsibility Isolation**. Seperation of responsibilties.
 
 ```javascript
 function Button(props) {
-    return (
-    <button onClick={props.onClickFunction}>
-        +1
-    </button>
-    );
+  return <button onClick={props.onClickFunction}>+1</button>;
 }
 
 function Display(props) {
+  return <div>{props.message}</div>;
+}
+
+function App() {
+  const [counter, setCounter] = useState(0);
+  const incrementCounter = () => setCounter(counter + 1);
   return (
     <div>
-        {props.message}
+      <Button onClickFunction={incrementCounter} increment={5} />
+      <Display message={counter} />
     </div>
   );
 }
 
-function App(){
-  const [counter, setCounter] = useState(0);
-  const incrementCounter = () => setCounter(counter+1);
-  return(
-  <div>
-    <Button onClickFunction={incrementCounter} increment={5}/>
-    <Display message={counter}/>
-  </div>
-  );
-}
-
-ReactDOM.render(
-  <App />, 
-  document.getElementById('mountNode'),
-);
+ReactDOM.render(<App />, document.getElementById("mountNode"));
 ```
 
 Finalized version of simple example allowing different incrementers
+
 ```javascript
 function Button(props) {
   const handleClick = () => props.onClickFunction(props.increment);
-    return (
-    <button onClick={handleClick}>
-        +{props.increment}
-    </button>
-    );
+  return <button onClick={handleClick}>+{props.increment}</button>;
 }
 
 function Display(props) {
+  return <div>{props.message}</div>;
+}
+
+function App() {
+  const [counter, setCounter] = useState(0);
+  const incrementCounter = (incrementValue) =>
+    setCounter(counter + incrementValue);
   return (
     <div>
-        {props.message}
+      <Button onClickFunction={incrementCounter} increment={1} />
+      <Button onClickFunction={incrementCounter} increment={5} />
+      <Button onClickFunction={incrementCounter} increment={10} />
+      <Button onClickFunction={incrementCounter} increment={100} />
+      <Display message={counter} />
     </div>
   );
 }
 
-function App(){
-  const [counter, setCounter] = useState(0);
-  const incrementCounter = (incrementValue) => setCounter(counter+incrementValue);
-  return(
-  <div>
-    <Button onClickFunction={incrementCounter} increment={1}/>
-    <Button onClickFunction={incrementCounter} increment={5}/>
-    <Button onClickFunction={incrementCounter} increment={10}/>
-    <Button onClickFunction={incrementCounter} increment={100}/>
-    <Display message={counter}/>
-  </div>
-  );
-}
-
-ReactDOM.render(
-  <App />, 
-  document.getElementById('mountNode'),
-);
+ReactDOM.render(<App />, document.getElementById("mountNode"));
 ```
 
 ##### Tree Reconsiliation
+
 Prevents imperative logic in the React way. Much more efficient and extracts complexity
 
 ```javascript
-const render= () => {
-  document.getElementById('mountNode').innerHTML = `
+const render = () => {
+  document.getElementById("mountNode").innerHTML = `
 	<div>
     Hello HTML
     <input />
-    <pre>${(new Date).toLocaleTimeString()}</pre>
+    <pre>${new Date().toLocaleTimeString()}</pre>
   </div>
 `;
 
   ReactDOM.render(
     React.createElement(
-      'div', 
-      null, 
-      'Hello React',
-      React.createElement('input', null),
-      React.createElement('pre', null, (new Date).toLocaleTimeString()),
+      "div",
+      null,
+      "Hello React",
+      React.createElement("input", null),
+      React.createElement("pre", null, new Date().toLocaleTimeString())
     ),
-    document.getElementById('mountNode2'),
+    document.getElementById("mountNode2")
   );
-}
+};
 
 setInterval(render, 1000);
 ```
 
 ##### Takeaways from this section
-* Props and State
-    * (props) => {}
-    * [val, setVal] = useState(initialVal)
-    * Immutable props. Mutable state
-* ReactDOM.render has two major parts
-    * Component
-    * DOM node
-* React Events
-    * React events 
-    * onClick, onSubmit, ...
+
+- Props and State
+  - (props) => {}
+  - [val, setVal] = useState(initialVal)
+  - Immutable props. Mutable state
+- ReactDOM.render has two major parts
+  - Component
+  - DOM node
+- React Events
+  - React events
+  - onClick, onSubmit, ...
 
 ## Modern Javascript Crash Course ES6
 
 ##### Variable declarations
-* Using var in block scope still allows access to it throughout program
-* Use let in for loops to make it local variable
-* const is used when you do now want to change its value
-    * cant change references and are immutable
-    * array or objects work with const but you may still change values 
+
+- Using var in block scope still allows access to it throughout program
+- Use let in for loops to make it local variable
+- const is used when you do now want to change its value
+  - cant change references and are immutable
+  - array or objects work with const but you may still change values
 
 ##### Arrow functions vs Regular Functions
-* Regular Functions
-    * give access to their calling environment
-    * value of "this" keyword depends on how function was called (the Object that made the call)
-* Arrow Functions
-    * value of "this" keyword depends on where function was defined(Scope that defined function)
-    * good for functional programing, essentially a lamda
+
+- Regular Functions
+  - give access to their calling environment
+  - value of "this" keyword depends on how function was called (the Object that made the call)
+- Arrow Functions
+  - value of "this" keyword depends on where function was defined(Scope that defined function)
+  - good for functional programing, essentially a lamda
 
 ##### Destructuring and Rest/Spread
+
 ```javascript
     // const PI = Math.Pi;
     // const E = Math.E;
@@ -235,21 +222,24 @@ setInterval(render, 1000);
         circleArea(circle, {precisions: 5})
     );
 ```
-Array descructuring
-```javascript
-    const [first, ...restOfItems] = [10, 20, 30, 40];
 
-    console.log(first);
-    console.log(restOfItems);
+Array descructuring
+
+```javascript
+const [first, ...restOfItems] = [10, 20, 30, 40];
+
+console.log(first);
+console.log(restOfItems);
 ```
 
 ##### Template Strings
-* Use single or double quotes
-* Use `` for templates
-    * use interpolation
+
+- Use single or double quotes
+- Use `` for templates
+  - use interpolation
 
 ```javascript
-    const html = `
+const html = `
         <div>
             ${Math.random()}
         </div>
@@ -257,6 +247,7 @@ Array descructuring
 ```
 
 ##### Classes
+
 ```javascript
 class Person {
   constructor(name) {
@@ -280,14 +271,15 @@ class Student extends Person {
 const o1 = new Person("Max");
 const o2 = new Student("Tina", "1st Grade");
 const o3 = new Student("Mary", "2nd Grade");
-o3.greet = () => console.log('I am special!');
+o3.greet = () => console.log("I am special!");
 
 o1.greet();
 o2.greet();
 o3.greet();
-
 ```
+
 ##### Async/Await
+
 ```javascript
 // const fetchData = () => {
 //   fetch('https://api.github.com').then(resp => {
@@ -298,65 +290,70 @@ o3.greet();
 // };
 
 const fetchData = async () => {
-  const resp = await fetch('https://api.github.com');
+  const resp = await fetch("https://api.github.com");
   const data = await resp.json();
   console.log(data);
 };
 
 fetchData();
-
 ```
+
 Instead of using .then simplify but using async() await.
 
 ## Class Components
+
 You can do inline styling if there is conditional styling
 Keep in mind there are many improvments that could be made on this code:
-* Error handling from user input
-* Extracting some logic out of components to pratice single responsbility
 
+- Error handling from user input
+- Extracting some logic out of components to pratice single responsbility
 
 ```javascript
 const CardList = (props) => (
-	<div>
-  	{props.profiles.map(profile => <Card key={profile.id} {...profile}/>)}
-	</div>
+  <div>
+    {props.profiles.map((profile) => (
+      <Card key={profile.id} {...profile} />
+    ))}
+  </div>
 );
 
 class Card extends React.Component {
-	render() {
-  	const profile = this.props;
-  	return (
-    	<div className="github-profile">
-    	  <img src={profile.avatar_url} />
+  render() {
+    const profile = this.props;
+    return (
+      <div className="github-profile">
+        <img src={profile.avatar_url} />
         <div className="info">
           <div className="name">{profile.name}</div>
           <div className="company">{profile.company}</div>
         </div>
-    	</div>
+      </div>
     );
   }
 }
 
 class Form extends React.Component {
-	state = { userName: '' };
-	handleSubmit = async (event) => {
-  	event.preventDefault();
-    const resp = await axios.get(`https://api.github.com/users/${this.state.userName}`);
+  state = { userName: "" };
+  handleSubmit = async (event) => {
+    event.preventDefault();
+    const resp = await axios.get(
+      `https://api.github.com/users/${this.state.userName}`
+    );
     this.props.onSubmit(resp.data);
-    this.setState({ userName: '' });
+    this.setState({ userName: "" });
   };
-	render() {
-  	return (
-    	<form onSubmit={this.handleSubmit}>
-    	  <input 
-          type="text" 
+  render() {
+    return (
+      <form onSubmit={this.handleSubmit}>
+        <input
+          type="text"
           value={this.state.userName}
-          onChange={event => this.setState({ userName: event.target.value })}
-          placeholder="GitHub username" 
-          required 
+          onChange={(event) => this.setState({ userName: event.target.value })}
+          placeholder="GitHub username"
+          required
         />
         <button>Add card</button>
-    	</form>
+      </form>
     );
   }
 }
@@ -366,23 +363,33 @@ class App extends React.Component {
     profiles: [],
   };
   addNewProfile = (profileData) => {
-  	this.setState(prevState => ({
-    	profiles: [...prevState.profiles, profileData],
+    this.setState((prevState) => ({
+      profiles: [...prevState.profiles, profileData],
     }));
   };
-	render() {
-  	return (
-    	<div>
-    	  <div className="header">{this.props.title}</div>
+  render() {
+    return (
+      <div>
+        <div className="header">{this.props.title}</div>
         <Form onSubmit={this.addNewProfile} />
         <CardList profiles={this.state.profiles} />
-    	</div>
+      </div>
     );
-  }	
+  }
 }
 
-ReactDOM.render(
-	<App title="The GitHub Cards App" />,
-  mountNode,
-);
+ReactDOM.render(<App title="The GitHub Cards App" />, mountNode);
 ```
+
+## React ROuting
+
+- Static routing
+  - Each route is defined up front
+  - Routes are declared as a part of application initialization
+  - Routes are loaded before rendering occurs
+  - Nested Routes through hierarchical declaration
+- Dynamic routing
+  - Routes may be encountered at runtime
+  - Routes are placed throughout application as appropriate
+  - Nested routes with pattern matching
+  - Routes are just components
