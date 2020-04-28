@@ -1,6 +1,7 @@
 import React from "react";
 import CardList from "../cardlist/CardList";
 import Form from "../form/Form";
+import styles from "./styles.scss";
 
 class UserCards extends React.Component {
   state = {
@@ -15,7 +16,7 @@ class UserCards extends React.Component {
   render() {
     return (
       <div>
-        <div className="header">{this.props.title}</div>
+        <div className="header">Github Cards</div>
         <Form onSubmit={this.addNewProfile} />
         <CardList profiles={this.state.profiles} />
       </div>
